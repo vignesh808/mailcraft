@@ -1,0 +1,5 @@
+node_modules/
+.env
+.env.local
+
+mailcraft-a693a-firebase-adminsdk-*.json

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MailCraft — Blackout Cold Email Studio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="site-aurora"></div>
+  <div class="noise-layer"></div>
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- ══ LOGIN PAGE ══════════════════════════════════════════ -->
+  <div id="login-page" class="page" style="display:none">
+    <div class="login-grid">
+      <div class="login-left">
+        <div class="login-brand">MailCraft<span class="dot">.</span></div>
+        <div class="login-tagline">
+          <h1>The professional's<br><em>cold email engine.</em></h1>
+          <p>AI-crafted, hyper-personalized outreach that respects your prospect's time — and gets responses.</p>
+        </div>
+        <div class="login-proof">
+          <div class="proof-item"><span class="proof-num">10s</span><span class="proof-label">to generate</span></div>
+          <div class="proof-div"></div>
+          <div class="proof-item"><span class="proof-num">6</span><span class="proof-label">tone modes</span></div>
+          <div class="proof-div"></div>
+          <div class="proof-item"><span class="proof-num">100%</span><span class="proof-label">personalized</span></div>
+        </div>
+        <div class="login-quotes">
+          <div class="quote-card">
+            <p>"Closed 3 deals in a week using MailCraft. The emails feel genuinely human."</p>
+            <span>— Sales Director, SaaS startup</span>
+          </div>
+        </div>
+      </div>
+      <div class="login-right">
+        <div class="login-card">
+          <div class="lc-header">
+            <div class="lc-logo">MC</div>
+            <div>
+              <div class="lc-title">Welcome back</div>
+              <div class="lc-sub">Sign in to your account</div>
+            </div>
+          </div>
+          <div class="lc-divider"></div>
+          <p class="lc-desc">Access your personalized cold email generator, email history, and analytics.</p>
+          <button class="google-btn" id="google-login-btn">
+            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 2.9l5.7-5.7C34.5 6.5 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16.1 19 13 24 13c3.1 0 5.8 1.1 8 2.9l5.7-5.7C34.5 6.5 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.9 13.5-5l-6.2-5.2C29.4 35.5 26.8 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.6 5.1C9.5 39.6 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.3 4.1-4.2 5.4l6.2 5.2C36.9 36.2 44 31 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
+            Continue with Google
+          </button>
+          <p class="lc-legal">By continuing, you agree to our Terms of Service. Your data is encrypted and never shared.</p>
+          <div class="lc-features">
+            <div class="lcf-item">✓ Free tier — 5 emails</div>
+            <div class="lcf-item">✓ Email history saved</div>
+            <div class="lcf-item">✓ 6 professional tones</div>
+            <div class="lcf-item">✓ Follow-up sequences</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ APP PAGE ════════════════════════════════════════════ -->
+  <div id="app-page" class="page" style="display:none">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <a class="nav-logo" href="#hero">MailCraft<span class="dot">.</span></a>
+      <div class="nav-links">
+        <a href="#generator" class="nav-link">Generator</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#workflow" class="nav-link">Workflow</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="#history-section" class="nav-link">History</a>
+      </div>
+      <div class="nav-right">
+        <span class="usage-badge" id="usage-badge"></span>
+        <div class="user-menu" id="user-menu">
+          <img class="user-avatar" id="user-avatar" src="" alt="avatar" />
+          <span class="user-name" id="user-name"></span>
+          <svg class="chevron" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          <div class="user-dropdown" id="user-dropdown">
+            <a href="#history-section" class="dd-item" onclick="closeDropdown()">📋 Email History</a>
+            <button class="dd-item dd-logout" onclick="logout()">↪ Sign out</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <div class="hero-inner">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-dot"></span>
+          AI-Powered Outreach Platform
+        </div>
+        <h1 class="hero-title">
+          The black-box studio for<br>
+          <em>emails that open doors.</em>
+        </h1>
+        <p class="hero-sub">MailCraft turns tiny prospect signals into sharp, human outreach. Built for founders, sellers, agencies, and operators who need cold emails that feel researched — not mass-produced.</p>
+        <div class="hero-actions">
+          <a href="#generator" class="btn-primary">Generate your first email →</a>
+          <a href="#workflow" class="btn-ghost">Watch the workflow</a>
+        </div>
+        <div class="trust-strip" aria-label="Product highlights">
+          <span>✦ Signal-led personalization</span>
+          <span>✦ Editable email canvas</span>
+          <span>✦ 4-step follow-up engine</span>
+        </div>
+        <div class="hero-stats">
+          <div class="hstat"><span class="hstat-n">8s</span><span class="hstat-l">Avg. draft time</span></div>
+          <div class="hstat-sep"></div>
+          <div class="hstat"><span class="hstat-n">4×</span><span class="hstat-l">Sequence builder</span></div>
+          <div class="hstat-sep"></div>
+          <div class="hstat"><span class="hstat-n">6</span><span class="hstat-l">Tone profiles</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="floating-chip chip-one">Personalization score: 94%</div>
+        <div class="floating-chip chip-two">CTA tightened ✓</div>
+        <div class="floating-chip chip-three">Follow-up ready</div>
+        <div class="email-preview-card upgraded-preview">
+          <div class="epc-header">
+            <div class="epc-dots"><span></span><span></span><span></span></div>
+            <div class="epc-title">MailCraft Live Draft</div>
+          </div>
+          <div class="epc-body">
+            <div class="epc-field"><span class="epc-label">Trigger:</span> TechCorp expanded into APAC</div>
+            <div class="epc-field"><span class="epc-label">Tone:</span> Consultative</div>
+            <div class="epc-field"><span class="epc-label">Subject:</span> APAC onboarding idea</div>
+            <div class="epc-divider"></div>
+            <div class="epc-text">
+              <p>Hi Sarah,</p>
+              <p>Saw TechCorp's APAC expansion — exciting, but onboarding new regional teams can get messy fast.</p>
+              <p>We help SaaS teams cut onboarding time by 40% without adding more ops work.</p>
+              <p>Open to a quick 15-minute chat this week?</p>
+              <p>— Alex</p>
+            </div>
+          </div>
+          <div class="epc-badge">✦ Generated in 8s</div>
+          <div class="preview-actions">
+            <span>Subject optimized</span>
+            <span>Spam-safe tone</span>
+            <span>One clear CTA</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+      <div class="features-inner">
+        <div class="section-label">CAPABILITIES</div>
+        <h2 class="section-title">Everything you need for<br>effective cold outreach</h2>
+        <div class="features-grid">
+          <div class="feat-card">
+            <div class="feat-icon">⚡</div>
+            <h3>Instant generation</h3>
+            <p>Get a fully personalized cold email in under 10 seconds. No writer's block, no templates.</p>
+          </div>
+          <div class="feat-card feat-highlight">
+            <div class="feat-icon">🎯</div>
+            <h3>6 tone profiles</h3>
+            <p>Professional, Casual, Bold, Consultative, Witty, Empathetic — match every prospect perfectly.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">📬</div>
+            <h3>Follow-up sequences</h3>
+            <p>Generate a complete 4-email follow-up sequence with perfect spacing and escalating CTAs.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">📋</div>
+            <h3>Email history</h3>
+            <p>Every email saved to your account. Search, copy, and reuse your best-performing emails.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">🔒</div>
+            <h3>Private & secure</h3>
+            <p>Your emails are encrypted and stored privately. We never train on your data.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">✂️</div>
+            <h3>One-click copy</h3>
+            <p>Copy subject + body instantly. Paste directly into Gmail, Outlook, or your CRM.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Workflow -->
+    <section class="workflow" id="workflow">
+      <div class="workflow-inner">
+        <div class="section-label">HOW IT WORKS</div>
+        <h2 class="section-title">From prospect research to polished outreach in three steps</h2>
+        <div class="workflow-grid">
+          <div class="workflow-card">
+            <div class="step-num">01</div>
+            <h3>Add the trigger</h3>
+            <p>Drop in a funding round, product launch, hiring push, LinkedIn note, or company update.</p>
+          </div>
+          <div class="workflow-card workflow-card-main">
+            <div class="step-num">02</div>
+            <h3>Choose the angle</h3>
+            <p>Pick a tone and benefit. MailCraft turns it into a short, specific reason to reply.</p>
+          </div>
+          <div class="workflow-card">
+            <div class="step-num">03</div>
+            <h3>Edit and send</h3>
+            <p>Fine-tune the subject and body directly, then copy it into Gmail, Outlook, or your CRM.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Signal Engine -->
+    <section class="signal-section" id="signal-engine">
+      <div class="signal-inner">
+        <div class="signal-copy">
+          <div class="section-label">SIGNAL ENGINE</div>
+          <h2 class="section-title">Different because it starts with the reason to care.</h2>
+          <p class="section-sub">Most AI email tools ask for a name and spit out a template. MailCraft is designed around the trigger: expansion, hiring, funding, new product, role change, pain point, or buying signal.</p>
+          <div class="signal-list">
+            <div><span>01</span> Finds the strongest email angle from your notes</div>
+            <div><span>02</span> Turns the angle into a concise opening line</div>
+            <div><span>03</span> Keeps the CTA simple, specific, and reply-friendly</div>
+          </div>
+        </div>
+        <div class="signal-board">
+          <div class="signal-card active"><b>Trigger</b><span>“Expanded into APAC”</span></div>
+          <div class="signal-card"><b>Pain</b><span>Regional onboarding gets slower</span></div>
+          <div class="signal-card"><b>Offer</b><span>Reduce ramp time by 40%</span></div>
+          <div class="signal-card glow"><b>Generated angle</b><span>Help new APAC teams onboard faster without adding ops load.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product OS -->
+    <section class="product-os-section">
+      <div class="os-shell">
+        <div class="os-topbar"><span></span><span></span><span></span><strong>MailCraft Outreach OS</strong></div>
+        <div class="os-grid">
+          <div class="os-panel">
+            <div class="os-label">Input stack</div>
+            <div class="os-pill">Prospect</div>
+            <div class="os-pill">Company signal</div>
+            <div class="os-pill">Offer</div>
+            <div class="os-pill">Tone</div>
+          </div>
+          <div class="os-panel os-center">
+            <div class="orb-core">MC</div>
+            <p>Signal → Angle → Email → Sequence</p>
+          </div>
+          <div class="os-panel">
+            <div class="os-label">Output quality</div>
+            <div class="quality-row"><span>Personal</span><b>94%</b></div>
+            <div class="quality-row"><span>Concise</span><b>91%</b></div>
+            <div class="quality-row"><span>CTA clarity</span><b>98%</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison -->
+    <section class="comparison-section">
+      <div class="comparison-inner">
+        <div class="section-label">WHY IT FEELS DIFFERENT</div>
+        <h2 class="section-title">Not another generic AI wrapper.</h2>
+        <div class="comparison-grid">
+          <div class="compare-card muted-card">
+            <h3>Typical generator</h3>
+            <p>Long intros, generic compliments, weak CTAs, and emails that sound like everyone else.</p>
+            <ul><li>Template-heavy</li><li>No signal logic</li><li>Hard to edit</li></ul>
+          </div>
+          <div class="compare-card winner-card">
+            <div class="winner-badge">MailCraft</div>
+            <h3>Signal-first email studio</h3>
+            <p>Focused on the prospect trigger, your value angle, concise messaging, and editable output.</p>
+            <ul><li>Trigger-led openings</li><li>6 tone profiles</li><li>4-email sequence builder</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing-section" id="pricing">
+      <div class="pricing-inner">
+        <div class="section-label">PRICING</div>
+        <h2 class="section-title">Start free. Upgrade when it saves you hours.</h2>
+        <div class="pricing-grid">
+          <div class="price-card">
+            <h3>Free</h3>
+            <div class="price">$0</div>
+            <p>For trying the product and generating your first outreach.</p>
+            <ul><li>5 free generations</li><li>All tones</li><li>Email history</li></ul>
+            <a href="#generator" class="btn-outline full">Start free</a>
+          </div>
+          <div class="price-card pro-price">
+            <div class="winner-badge">Best value</div>
+            <h3>Pro</h3>
+            <div class="price">$19<span>/mo</span></div>
+            <p>For consistent outbound, agencies, founders, and sales teams.</p>
+            <ul><li>Unlimited generations</li><li>Follow-up sequences</li><li>Priority generation</li><li>Saved history</li></ul>
+            <button class="btn-primary full" onclick="goToStripe()">Upgrade to Pro →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Generator -->
+    <section class="generator-section" id="generator">
+      <div class="gen-inner">
+        <div class="gen-header">
+          <div class="section-label">GENERATOR</div>
+          <h2 class="section-title">Craft your email</h2>
+          <p class="gen-sub">Fill in the details below. The more specific you are, the better your email.</p>
+        </div>
+        <div class="gen-wrap">
+          <!-- Form -->
+          <div class="form-panel">
+            <div class="form-section">
+              <div class="form-section-label">PROSPECT DETAILS</div>
+              <div class="form-group">
+                <label>Full name <span class="req">*</span></label>
+                <input id="prospect-name" type="text" placeholder="e.g. Sarah Johnson" />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Job title</label>
+                  <input id="prospect-title" type="text" placeholder="e.g. Head of Marketing" />
+                </div>
+                <div class="form-group">
+                  <label>Company <span class="req">*</span></label>
+                  <input id="company-name" type="text" placeholder="e.g. Acme Corp" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>About their company</label>
+                <input id="company-desc" type="text" placeholder="e.g. a B2B SaaS startup scaling in Southeast Asia" />
+              </div>
+              <div class="form-group">
+                <label>Personalization trigger</label>
+                <input id="personalization-trigger" type="text" placeholder="e.g. they just launched in APAC, raised funding, hired SDRs, posted on LinkedIn..." />
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="form-section-label">YOUR OFFER</div>
+              <div class="form-group">
+                <label>Your name / company <span class="req">*</span></label>
+                <input id="sender-name" type="text" placeholder="e.g. Alex from GrowthFlow" />
+              </div>
+              <div class="form-group">
+                <label>What you're selling <span class="req">*</span></label>
+                <textarea id="product-desc" placeholder="e.g. an AI tool that automates lead qualification and reduces SDR workload by 60%..." maxlength="300"></textarea>
+                <span class="char-count"><span id="char-num">0</span>/300</span>
+              </div>
+              <div class="form-group">
+                <label>Key benefit to this prospect</label>
+                <input id="key-benefit" type="text" placeholder="e.g. Cut outreach time by 70% without sacrificing personalization" />
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="form-section-label">EMAIL TONE</div>
+              <div class="tone-grid">
+                <button class="tone-btn active" data-tone="Professional">Professional</button>
+                <button class="tone-btn" data-tone="Casual">Casual</button>
+                <button class="tone-btn" data-tone="Bold">Bold</button>
+                <button class="tone-btn" data-tone="Consultative">Consultative</button>
+                <button class="tone-btn" data-tone="Witty">Witty</button>
+                <button class="tone-btn" data-tone="Empathetic">Empathetic</button>
+              </div>
+            </div>
+
+            <div class="form-section power-panel">
+              <div class="form-section-label">CAMPAIGN CONTROL</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Email goal</label>
+                  <select id="email-goal">
+                    <option value="Book a 15-minute call">Book a 15-minute call</option>
+                    <option value="Get a reply">Get a reply</option>
+                    <option value="Offer a free audit">Offer a free audit</option>
+                    <option value="Invite to demo">Invite to demo</option>
+                    <option value="Reconnect with a cold lead">Reconnect with a cold lead</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Length</label>
+                  <select id="email-length">
+                    <option value="Very short, under 90 words">Very short</option>
+                    <option value="Short, under 130 words" selected>Short</option>
+                    <option value="Detailed, under 180 words">Detailed</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>CTA style</label>
+                  <select id="cta-style">
+                    <option value="soft and low-pressure">Soft</option>
+                    <option value="direct and confident">Direct</option>
+                    <option value="curious question">Curious question</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Extra context</label>
+                  <input id="extra-context" type="text" placeholder="e.g. mention case study, free trial, local market, founder-led team" />
+                </div>
+              </div>
+              <div class="smart-actions">
+                <button type="button" class="mini-btn" onclick="fillSampleLead()">Use sample</button>
+                <button type="button" class="mini-btn" onclick="saveSenderProfile()">Save my profile</button>
+                <button type="button" class="mini-btn" onclick="loadSenderProfile()">Load profile</button>
+                <button type="button" class="mini-btn" onclick="clearGeneratorForm()">Clear form</button>
+              </div>
+              <div class="lead-importer">
+                <label class="file-pill">Import leads CSV
+                  <input id="lead-csv" type="file" accept=".csv" onchange="importLeadCsv(event)" />
+                </label>
+                <button type="button" class="mini-btn" onclick="loadNextLead()">Next lead</button>
+                <span id="lead-queue-status" class="queue-status">No leads imported</span>
+              </div>
+            </div>
+
+            <p class="error-msg" id="error-msg"></p>
+            <div class="btn-group">
+              <button class="btn-primary full" id="generate-btn" onclick="generateEmail()">
+                <span id="btn-text">Generate email →</span>
+                <span id="btn-loading" style="display:none">Generating...</span>
+              </button>
+              <button class="btn-outline full" id="sequence-btn" onclick="generateSequence()">
+                Generate 4-email sequence
+              </button>
+            </div>
+          </div>
+
+          <!-- Output -->
+          <div class="output-panel" id="output-panel">
+            <div class="output-box">
+              <div class="output-placeholder" id="output-placeholder">
+                <div class="placeholder-envelope">✉</div>
+                <p>Your personalized email will appear here</p>
+                <span>Fill in the form and click Generate</span>
+              </div>
+              <div class="output-content" id="output-content" style="display:none">
+                <div class="oc-section">
+                  <div class="oc-label">SUBJECT LINE</div>
+                  <div class="email-subject editable-output" id="email-subject" contenteditable="true" spellcheck="true"></div>
+                </div>
+                <div class="oc-divider"></div>
+                <div class="oc-section">
+                  <div class="oc-label">EMAIL BODY</div>
+                  <div class="email-body editable-output" id="email-body" contenteditable="true" spellcheck="true"></div>
+                </div>
+                <div class="quality-panel" id="quality-panel">
+                  <div class="quality-chip" id="word-count">0 words</div>
+                  <div class="quality-chip" id="subject-score">Subject ready</div>
+                  <div class="quality-chip" id="spam-score">Clean copy</div>
+                </div>
+                <div class="oc-actions multi-actions">
+                  <button class="btn-primary" onclick="copyEmail()">⎘ Copy email</button>
+                  <button class="btn-outline" onclick="copySubjectOnly()">Copy subject</button>
+                  <button class="btn-outline" onclick="downloadEmailTxt()">Download .txt</button>
+                  <button class="btn-outline" onclick="saveLocalDraft()">Save draft</button>
+                  <button class="btn-outline" onclick="generateEmail()">↺ Regenerate</button>
+                </div>
+                <div class="variants-box">
+                  <div class="oc-label">SUBJECT VARIANTS</div>
+                  <div id="subject-variants" class="variant-list"></div>
+                </div>
+              </div>
+            </div>
+            <div class="tips-card">
+              <div class="tips-label">✦ PRO TIPS</div>
+              <ul>
+                <li>Reference a specific recent event at their company</li>
+                <li>One CTA only — ask for a reply or a 15-min call</li>
+                <li>Subject lines under 7 words get higher open rates</li>
+                <li>Follow up 3–5 days after with the sequence generator</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+      <div class="testi-inner">
+        <div class="section-label">RESULTS</div>
+        <h2 class="section-title">Trusted by sales professionals</h2>
+        <div class="testi-grid">
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p>"I closed 2 enterprise deals in my first week using MailCraft. The personalization is genuinely impressive."</p>
+            <div class="testi-author">
+              <div class="testi-avatar">RK</div>
+              <div><strong>Rahul K.</strong><span>Enterprise Account Executive</span></div>
+            </div>
+          </div>
+          <div class="testi-card testi-featured">
+            <div class="testi-stars">★★★★★</div>
+            <p>"Our reply rate went from 3% to 18% after switching to MailCraft. The tone options make every email feel handcrafted."</p>
+            <div class="testi-author">
+              <div class="testi-avatar">PM</div>
+              <div><strong>Priya M.</strong><span>Head of Sales, Series B SaaS</span></div>
+            </div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p>"The follow-up sequence feature alone is worth it. I set it up once and let it run. My pipeline has never been fuller."</p>
+            <div class="testi-author">
+              <div class="testi-avatar">JS</div>
+              <div><strong>James S.</strong><span>Founder, B2B Agency</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Workflow Suite -->
+    <section class="workflow-suite">
+      <div class="features-inner">
+        <div class="section-label">BUILT FOR REAL USE</div>
+        <h2 class="section-title">A complete outbound workspace, not just a prompt box</h2>
+        <div class="workflow-grid">
+          <div class="workflow-card"><span>01</span><h3>Lead queue</h3><p>Import a CSV of prospects and move through them one by one without retyping details.</p></div>
+          <div class="workflow-card"><span>02</span><h3>Campaign controls</h3><p>Choose the goal, length, CTA style, tone, trigger, and context before generating.</p></div>
+          <div class="workflow-card"><span>03</span><h3>Editable drafts</h3><p>Polish subject and body in place, then copy, export, save, or regenerate instantly.</p></div>
+          <div class="workflow-card"><span>04</span><h3>Quality checks</h3><p>See quick word count, subject length, and spam-risk hints before you send.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+      <div class="faq-inner">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title">Common questions</h2>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <div class="faq-q">Is my data private?</div>
+            <div class="faq-a">Yes. Your emails are stored encrypted in your private account. We never use your data for training or share it with third parties.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">What's included in the free plan?</div>
+            <div class="faq-a">5 free email generations with full access to all tone modes and the follow-up sequence generator.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">How is this different from ChatGPT?</div>
+            <div class="faq-a">MailCraft is purpose-built for cold email with specialized prompts, tone control, sequence generation, and email history — all in one place.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Can I cancel anytime?</div>
+            <div class="faq-a">Yes. Cancel anytime from your account. No long-term contracts, no cancellation fees.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Email History -->
+    <section class="history-section" id="history-section">
+      <div class="history-inner">
+        <div class="history-header">
+          <div>
+            <div class="section-label">YOUR ACCOUNT</div>
+            <h2 class="section-title" style="margin-bottom:0">Email History</h2>
+          </div>
+          <div class="history-tools">
+            <input id="history-search" class="history-search" type="search" placeholder="Search history..." oninput="filterHistoryCards()" />
+            <button class="btn-outline-sm" onclick="exportHistoryCsv()">Export CSV</button>
+            <button class="btn-outline-sm" onclick="clearHistory()" id="clear-btn" style="display:none">Clear all</button>
+          </div>
+        </div>
+        <div class="history-grid" id="history-grid">
+          <div class="history-empty" id="history-empty">
+            <p>No emails generated yet.<br>Generate your first email above!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="cta-inner">
+        <div class="section-label">START TODAY</div>
+        <h2>Send the email your prospect actually wants to read.</h2>
+        <p>Start with 5 free generations. Upgrade only when MailCraft becomes part of your workflow.</p>
+        <a href="#generator" class="btn-primary btn-lg">Try MailCraft free →</a>
+        <div class="cta-mini-proof">No credit card required · 6 tones · Sequence generator included</div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">MailCraft<span class="dot">.</span></div>
+        <div class="footer-links">
+          <a href="#generator">Generator</a>
+          <a href="#features">Features</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#history-section">History</a>
+        </div>
+        <div class="footer-copy">Powered by Groq AI · © 2026 MailCraft</div>
+      </div>
+    </footer>
+
+  </div><!-- end app-page -->
+
+  <!-- Paywall -->
+  <div class="paywall-overlay" id="paywall-overlay" style="display:none">
+    <div class="paywall-card">
+      <div class="pw-badge">Pro Plan</div>
+      <h2>You've used your 5 free emails</h2>
+      <p>Upgrade to Pro for unlimited AI-generated cold emails, all tone modes, and priority generation.</p>
+      <div class="pw-features">
+        <div class="pw-feat">✓ Unlimited emails</div>
+        <div class="pw-feat">✓ All 6 tone modes</div>
+        <div class="pw-feat">✓ Email history forever</div>
+        <div class="pw-feat">✓ Follow-up sequences</div>
+        <div class="pw-feat">✓ Priority generation</div>
+        <div class="pw-feat">✓ Cancel anytime</div>
+      </div>
+      <div class="pw-price"><span>$19</span><span class="pw-per">/month</span></div>
+      <button class="btn-primary full" onclick="goToStripe()">Upgrade to Pro →</button>
+      <button class="pw-skip" onclick="closePaywall()">Maybe later</button>
+    </div>
+  </div>
+
+  <script>
+    const cursorGlow = document.getElementById('cursor-glow');
+    window.addEventListener('pointermove', (e) => {
+      if (!cursorGlow) return;
+      cursorGlow.style.transform = `translate(${e.clientX - 160}px, ${e.clientY - 160}px)`;
+    });
+  </script>
+  <script type="module" src="auth.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
